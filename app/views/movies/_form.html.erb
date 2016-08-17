@@ -26,8 +26,17 @@
     <%= f.number_field :runtime_in_minutes %>
   </div>
   <div>
-    <%= f.label :poster_image_url %><br>
-    <%= f.text_field :poster_image_url %>
+    <%= f.label :image %>
+    <%= f.file_field :image %><br>
+    <% if f.object.image? %>
+      <%= image_tag f.object.image.thumb.url %>
+      <%= f.label :remove_image %>
+      <%= f.check_box :remove_image %> 
+    <% end %>
+  </div>
+  <div>
+    <%= f.label :remote_image_url, 'or Image URL'%><br>
+    <%= f.text_field :remote_image_url %>
   </div>
   <div>
     <%= f.label :description %><br>

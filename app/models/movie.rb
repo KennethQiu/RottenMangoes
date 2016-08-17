@@ -11,9 +11,6 @@ class Movie < ApplicationRecord
   validates :description,
     presence: true
 
-  validates :poster_image_url,
-    presence: true
-
   validates :release_date,
     presence: true
 
@@ -21,9 +18,14 @@ class Movie < ApplicationRecord
 
   has_many :reviews
 
+  mount_uploader :image, ImageUploader 
+
   def review_average
-    reviews ? reviews.sum(:rating_out_of_ten)/reviews.size : 0 
+    reviews.any? ? reviews.sum(:rating_out_of_ten)/reviews.size : 0 
   end
+
+  validates_processing_of :image
+  validate :image_size_validation
 
   protected
 
@@ -31,6 +33,11 @@ class Movie < ApplicationRecord
     if release_date.present?  
       errors.add(:release_date, "should be in the past") if release_date > Date.today
     end
+  end
+
+  private
+  def image_size_validation
+    errors[:image] << "should be less than 500KB" if image.size > 0.5.megabytes
   end
 
 end
