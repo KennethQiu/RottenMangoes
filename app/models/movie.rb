@@ -19,6 +19,12 @@ class Movie < ApplicationRecord
 
   validate :release_date_is_in_the_past
 
+  has_many :reviews
+
+  def review_average
+    reviews ? reviews.sum(:rating_out_of_ten)/reviews.size : 0 
+  end
+
   protected
 
   def release_date_is_in_the_past
