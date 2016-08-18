@@ -1,1 +1,14 @@
-admin view
+<% users = User.all %>
+<table>
+  <tr>
+    <th>Full Name</th>
+    <th>Email</th>
+    <th>Admin</th>
+  <% users.each do |user| %>
+    </tr>
+      <td><%= user.full_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.is_admin %></td>
+    <tr>
+  <% end %>
+</table>
