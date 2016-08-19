@@ -20,12 +20,18 @@ class Movie < ApplicationRecord
 
   mount_uploader :image, ImageUploader 
 
+  validates_processing_of :image
+  validate :image_size_validation
+  
+  scope :title_is, -> (title) { where("title LIKE ?", "%#{title}%") }
+  scope :director_is, -> (director) { where("director LIKE ?", "%#{director}%") }
+  scope :is_short, -> { where("runtime_in_minutes < 90") }
+  scope :is_medium, -> { where("runtime_in_minutes BETWEEN 90 AND 120") }
+  scope :is_long, -> { where("runtime_in_minutes > 120 ") }
   def review_average
     reviews.any? ? reviews.sum(:rating_out_of_ten)/reviews.size : 0 
   end
 
-  validates_processing_of :image
-  validate :image_size_validation
 
   protected
 
