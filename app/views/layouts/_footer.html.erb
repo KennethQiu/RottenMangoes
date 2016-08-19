@@ -10,5 +10,8 @@
     <% else %>
       <%= link_to "Log In", new_session_path %> | <%= link_to "Sign Up", new_user_path %>
     <% end %>
+    <% if impersonating? %>
+      <%= link_to "End Impersonation", end_impersonate_admin_users_path %>
+    <% end %>
   </small>
 </footer>

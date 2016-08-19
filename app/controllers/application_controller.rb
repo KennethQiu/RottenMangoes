@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  helper_method :current_user, :admin?
+  def impersonating?
+    session[:orig_user_id] != nil
+  end
+
+  helper_method :current_user, :impersonating?
 
 end

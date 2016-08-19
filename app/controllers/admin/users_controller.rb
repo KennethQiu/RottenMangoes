@@ -1,6 +1,8 @@
 class Admin::UsersController < ApplicationController
 
-  before_action do
+  before_action :admin_restriction, except: [:end_impersonate]
+
+  def admin_restriction
     unless current_user.is_admin?
       flash[:notice] = "No Admin for you! RAWR!"
       redirect_to '/'
@@ -42,6 +44,18 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to admin_users_path, notice: "User #{@user.firstname} deleted!"
+  end
+
+  def impersonate 
+    session[:orig_user_id] = session[:user_id]
+    session[:user_id] = params[:id]
+    redirect_to root_path 
+  end
+
+  def end_impersonate
+    session[:user_id] = session[:orig_user_id]
+    session.delete(:orig_user_id)
+    redirect_to admin_users_path
   end
 
   protected

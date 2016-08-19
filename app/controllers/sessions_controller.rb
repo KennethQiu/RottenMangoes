@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+ 
   def new
   end
 
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session.delete(:orig_user_id)
     redirect_to movies_path, notice: "Adios!"
   end
 end

@@ -7,8 +7,17 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'movies#index'
 
+  
+
   namespace :admin do
-    resources :users, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
+      collection do
+        get 'end_impersonate'
+      end
+      member do
+        get 'impersonate' 
+      end
+    end
   end 
 
 end
