@@ -1,8 +1,10 @@
 <%= form_tag(movies_path, method: "get") do %>
-  <%= label_tag(:title, "Title:") %>
+<!--   <%= label_tag(:title, "Title:") %>
   <%= text_field_tag(:title, nil, {class: 'classname', placeholder: 'Title'}) %>
   <%= label_tag(:director, "Director:") %>
-  <%= text_field_tag(:director, nil, {class: 'classname', placeholder: 'Director'}) %>
+  <%= text_field_tag(:director, nil, {class: 'classname', placeholder: 'Director'}) %> -->
+  <%= label_tag(:q, "Search:") %>
+  <%= text_field_tag(:q, nil, {class: 'classname', placeholder: 'Search Movie or Director'}) %>
   <%= select_tag(:runtime, options_for_select([['Under 90 minutes', 'short'],['Between 90 and 120 minutes','medium'],['Over 120 minutes','long']]), prompt: 'Runtime') %>
   <%= submit_tag("Search") %>
   <%= %>

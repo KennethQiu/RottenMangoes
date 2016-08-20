@@ -28,6 +28,8 @@ class Movie < ApplicationRecord
   scope :is_short, -> { where("runtime_in_minutes < 90") }
   scope :is_medium, -> { where("runtime_in_minutes BETWEEN 90 AND 120") }
   scope :is_long, -> { where("runtime_in_minutes > 120 ") }
+  scope :contains, -> (q) { where("title LIKE :q or director LIKE :q", :q => "%#{q}%")}
+
   def review_average
     reviews.any? ? reviews.sum(:rating_out_of_ten)/reviews.size : 0 
   end

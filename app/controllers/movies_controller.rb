@@ -4,9 +4,15 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @movies = @movies.title_is(params[:title]) if params[:title].present?
     @movies = @movies.director_is(params[:director]) if params[:director].present?
-    @movies = @movies.is_short if params[:runtime] == 'short'
-    @movies = @movies.is_medium if params[:runtime] == 'medium'
-    @movies = @movies.is_long if params[:runtime] == 'long'
+    @movies = @movies.contains(params[:q]) if params[:q].present?
+    case params[:runtime]
+    when 'short'
+      @movies = @movies.is_short
+    when 'medium'
+      @movies = @movies.is_medium 
+    when 'long'    
+      @movies = @movies.is_long
+    end
   end
 
   def show
