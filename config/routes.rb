@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
   resources :users, only: [:new, :create, :edit, :update, :destroy]
-  resources :sessions, only: [:new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy]
   root to: 'movies#index'
 
   
